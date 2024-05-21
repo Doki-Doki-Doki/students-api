@@ -1,5 +1,3 @@
-// index.js
-
 // Import the Libraries
 const express = require('express')
 const axios = require('axios') 
@@ -17,10 +15,11 @@ app.listen(8000, () => {
 })
 
 
+// Get Students Endpoint
 app.get('/students', async (req, res) => {
     try {
 
-        const students = await axios.get('https://json-server-q3wd.onrender.com/students')
+        const students = await axios.get('https://json-server-vlop.onrender.com/students')
         res.status(200).json(students.data)
 
     } catch (error) {
@@ -30,13 +29,60 @@ app.get('/students', async (req, res) => {
     
 })
 
+// Get One Student Endpoint
 app.get('/students/:id', async (req, res) => {
     try {
 
         const { id } = req.params
 
-        const students = await axios.get('https://json-server-q3wd.onrender.com/students')
-        res.status(200).json(students.data)
+        const student = await axios.get('https://json-server-vlop.onrender.com/students/${id}')
+        res.status(200).json(student.data)
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({message: error.message})
+    }
+    
+})
+
+// Add Students Endpoint
+app.post('/students', async (req, res) => {
+    try {
+
+        const student = await axios.post('https://json-server-vlop.onrender.com/students', req.body)
+        res.status(200).json(student.data)
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({message: error.message})
+    }
+    
+})
+
+// Update Student Endpoint
+app.put('/students/:id', async (req, res) => {
+    try {
+
+        const { id } = req.params
+
+        const student = await axios.put('https://json-server-vlop.onrender.com/students/${id}, req.body')
+        res.status(200).json(student.data)
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({message: error.message})
+    }
+    
+})
+
+// Delete Student Endpoint
+app.delete('/students/:id', async (req, res) => {
+    try {
+
+        const { id } = req.params
+
+        const student = await axios.delete('https://json-server-vlop.onrender.com/students/${id}')
+        res.status(200).json(student.data)
 
     } catch (error) {
         console.log(error)
